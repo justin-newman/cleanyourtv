@@ -28,6 +28,7 @@ the core bigger or change how it behaves. You install an add-on only if you want
 | [Ad Blocking](ad-blocking/) | Your Pi-hole (6 or 5) or AdGuard Home on the TV: today's queries and blocked share, and one OK to pause blocking for five minutes | [@maxhayim](https://github.com/maxhayim) | MOKA R8G (Android 14) | `INTERNET` (your blocker only) | <img src="ad-blocking/screenshot.jpg" width="240" alt="Ad Blocking on a TV"> |
 | [World Clock](world-clock/) | One to six offline clocks with dates, UTC offsets and day differences; city search and D-pad controls | [@SaviorOneZero](https://github.com/SaviorOneZero) | Samsung C71KW-200 / AT&T Osprey (Android TV 11) | None | <img src="world-clock/screenshot.jpg" width="240" alt="World Clock on a TV"> |
 | [Flock](flock/) | An interactive flocking simulation using separation, alignment and cohesion, controlled with the TV remote | CleanYourTV contributors | TCL 32S5K (Android TV 14) | None | <img src="flock/screenshot.jpg" width="240" alt="Flock on TCL Android TV"> |
+| [Bluetooth Toggle](bluetooth-toggle/) | A one-press Bluetooth switch: the tile turns Bluetooth off or on, a small panel says which, and Pair accessory is one press away | [@justin-newman](https://github.com/justin-newman) | Hisense 75U75N (hengshan), Google TV 12 | Bluetooth (`BLUETOOTH_CONNECT`) | <img src="bluetooth-toggle/screenshot.jpg" width="240" alt="Bluetooth Toggle on a TV"> |
 
 A widget, an info tile, a storage or smart-home card: if it can live as its own small app, it can live
 here. See the rules below.
