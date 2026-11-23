@@ -116,6 +116,21 @@ public class GameDayTest {
         assertEquals(30, GameDay.turnSeconds(Collections.emptyList()));
     }
 
+    @Test public void whenShowsTheShortDateAndTheClocksTime() {
+        long start = Instant.parse("2026-10-28T01:00:00Z").toEpochMilli();
+        java.time.ZoneId denver = java.time.ZoneId.of("America/Denver");
+        assertEquals("TUE 27 OCT · 7:00 PM", GameDay.when(start, "EEEE  d MMMM", false, java.util.Locale.ENGLISH, denver));
+        assertEquals("TUE 27 OCT · 19:00", GameDay.when(start, "EEEE  d MMMM", true, java.util.Locale.ENGLISH, denver));
+        // The language's own order, shortened the same way.
+        assertEquals("27 OCT TUE · 19:00", GameDay.when(start, "d MMMM EEEE", true, java.util.Locale.ENGLISH, denver));
+    }
+
+    @Test public void whenFallsBackOnABrokenDatePattern() {
+        long start = Instant.parse("2026-10-28T01:00:00Z").toEpochMilli();
+        assertEquals("TUE 27 OCT · 19:00",
+                GameDay.when(start, "{", true, java.util.Locale.ENGLISH, java.time.ZoneId.of("America/Denver")));
+    }
+
     @Test public void durationHelperMatchesTheCountdown() {
         assertEquals(Duration.ofMinutes(125), GameDay.until(game("Game", 125 * 60_000L, HOUR), NOW.toEpochMilli()));
     }

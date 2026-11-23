@@ -2855,8 +2855,10 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
                 String in = RaceWeekend.countdown(getResources(), GameDay.until(t, now));
                 raceHeadline.setText(t.word.isEmpty() ? in : getString(R.string.race_next, t.word, in));
             }
-            // No session times for a game: the line takes no room, so the dots sit under the countdown.
-            raceSessions.setVisibility(View.GONE);
+            // Where the F1 session times go: the day and time the game starts.
+            raceSessions.setText(GameDay.when(t.startMs, getString(R.string.date_format),
+                    ClockFormat.is24(this, clockFormat), Locale.getDefault(), java.time.ZoneId.systemDefault()));
+            raceSessions.setVisibility(View.VISIBLE);
             racePanel.setVisibility(View.VISIBLE);
         }
         showPager(turns.size(), on);

@@ -11,10 +11,14 @@ import android.net.Uri;
 import android.os.Handler;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -215,5 +219,23 @@ final class GameDay {
 
     static Duration until(Turn t, long nowMs) {
         return Duration.ofMillis(t.startMs - nowMs);
+    }
+
+    /**
+     * When a game starts, under its countdown: "TUE 27 OCT · 7:00 PM". The date is the clock's own
+     * {@code date_format} with the day and month names shortened, so it reads in the same order in every
+     * language; the time follows the clock's 12 or 24 hours, as the F1 session times do.
+     */
+    static String when(long startMs, String datePattern, boolean is24, Locale locale, ZoneId zone) {
+        String time = is24 ? "HH:mm" : "h:mm a";
+        String date = datePattern.replace("EEEE", "EEE").replace("MMMM", "MMM").replace("LLLL", "LLL")
+                .replaceAll(" {2,}", " ").trim();
+        DateTimeFormatter f;
+        try {
+            f = DateTimeFormatter.ofPattern(date + " '·' " + time, locale);
+        } catch (IllegalArgumentException badPattern) {
+            f = DateTimeFormatter.ofPattern("EEE d MMM '·' " + time, locale);
+        }
+        return f.withZone(zone).format(Instant.ofEpochMilli(startMs)).toUpperCase(locale);
     }
 }
